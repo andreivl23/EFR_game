@@ -1,11 +1,12 @@
-from database import makeconnection
-from flask import Flask
+
+from database import make_connection
+from flask import Flask, render_template
 from flask_cors import CORS
 import random
 
 
-connection = makeconnection()
-app = Flask(__name__)
+connection = make_connection()
+app = Flask(__name__, template_folder='../templates', static_folder='../static')
 CORS(app)
 
 """ API endpoints:
@@ -18,6 +19,10 @@ CORS(app)
                                                     changes opened to 1 if it was 0. 
 """
 
+@app.route('/')
+@app.route('/home')
+def index():
+    return render_template('index.html')
 
 
 @app.route('/start/<player>/<current_station>/<resource>')  # Starts game, appends events to random locations.
