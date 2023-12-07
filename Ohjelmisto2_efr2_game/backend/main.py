@@ -23,6 +23,9 @@ CORS(app)
 @app.route('/home')
 def index():
     return render_template('index.html')
+@app.route('/escape-from-russia')
+def story():
+    return render_template('story.html')
 
 
 @app.route('/start/<player>/<current_station>/<resource>')  # Starts game, appends events to random locations.
