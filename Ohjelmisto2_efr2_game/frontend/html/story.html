@@ -12,7 +12,7 @@
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
             crossorigin=""></script>
     <link rel="icon" href="../img/home_page_logo.png" type="image/png">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style_story.css">
     <script src="../js/main.js" defer></script>
 
     <title>Escape from Russia</title>
@@ -20,75 +20,89 @@
 <body>
 <div class="secondContainer">
     <header class="page-header">
-        <h1 class="title">Escape from Russia</h1>
         <nav>
             <ul class="flex-wrap">
                 <li class="left-button">
                     <button>Restart</button>
                 </li>
                 <li class="right-button">
-                    <button>Story</button>
+                    <button id="story">Story</button>
                 </li>
                 <li>
-                    <button>Manual</button>
+                    <button id="manual">Manual</button>
                 </li>
             </ul>
         </nav>
     </header>
     <main>
-        <div id="map"></div>
-        <div class="boxes">
-            <section class="box">
-                <header>
-                    <h2>Game status</h2>
-                </header>
-                <table border="1">
-                    <tr>
-                        <td colspan="3"> Player Name</td>
-                    </tr>
-                    <tr>
-                        <td>Dirty train: <span id="dirty">0</span></td>
-                        <td>Green train: <span id="green">2</span></td>
-                        <td>Coca-Cola: <span id="budget">10</span></td>
-                    </tr>
-                </table>
-            </section>
-            <section class="box">
-                <header>
-                    <h2 id="station-name">Station name</h2>
-                </header>
-                <table id="train">
-                    <tr>
-                        <td>
-                            <img src="../img/icon_train.png"
-                                 alt="Current train">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td id="train-type">Diesel train</td>
-                        <td>From Moscow</td>
-                    </tr>
+        <div class="flex-wrap">
+            <div id="map" class="min_width"></div>
+            <div id="game_menu" class="boxes">
+                <section class="box">
+                    <header>
+                        <h2>Game status</h2>
+                    </header>
+                    <table border="1">
+                        <tr>
+                            <td colspan="3"> Player Name</td>
+                        </tr>
+                        <tr>
+                            <td>Dirty train: <span id="dirty">0</span></td>
+                            <td>Green train: <span id="green">2</span></td>
+                            <td>Coca-Cola: <span id="budget">10</span></td>
+                        </tr>
+                    </table>
+                </section>
+                <section class="box">
+                    <header>
+                        <h2 id="station-name">Station name</h2>
+                    </header>
+                    <table id="train">
+                        <tr>
+                            <td>
 
-                </table>
-            </section>
-            <section class="box">
-                <header>
-                    <h2>Event</h2>
-                </header>
-                <ul id="event" class="flex-wrap">
-                    <li>
-                        <figure class="event-box">
-                            <img src="../img/putin.png" alt="cool russian dude">
-                            <figcaption>event text here</figcaption>
-                        </figure>
-                </ul>
-            </section>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="train-type">Diesel train</td>
+                            <td>From Moscow</td>
+                        </tr>
+
+                    </table>
+                </section>
+            </div>
+            <div id="event">
+                <section class="box">
+                    <header>
+                        <h2>Event</h2>
+                    </header>
+                    <ul class="flex-wrap">
+                        <li>
+                            <figure class="event-box">
+                                <img src="../img/putin.png" alt="cool russian dude">
+                                <figcaption>event text here</figcaption>
+                            </figure>
+                    </ul>
+                </section>
+            </div>
         </div>
     </main>
     <footer class="page-footer">
         <p>© 2023 Metropolia Ryhmä E. All rights reserved.</p>
     </footer>
 </div>
-
+    <dialog  class="help_menu">
+        <span id="close_story">&#x2715;</span>
+        <h1> Story </h1>
+        <p> You are an American that were on trip around the Russia in 1994 (right after Berlin's wall fall),
+            but when you were on your way to the airport, you realized that you lost your passport at some cafe,
+            but you don't remember in which city. You don't have any money left, but you still have your Coca-Cola,
+            that are valued by Russian citizens. Will you find your passport and fly back home or will you get stuck in Russia forever?  </p>
+    </dialog>
+    <dialog class="help_menu">
+        <span id="close_manual">&#x2715;</span>
+        <h1> Manual </h1>
+        <p> Here could be some rules </p>
+    </dialog>
 </body>
 </html>
