@@ -20,6 +20,7 @@
 <body>
 <div class="secondContainer">
     <header class="page-header">
+        <h1 class="title">Escape from Russia</h1>
         <nav>
             <ul class="flex-wrap">
                 <li class="left-button">
@@ -38,22 +39,22 @@
         <div class="flex-wrap">
             <div id="map" class="min_width"></div>
             <div id="game_menu" class="boxes">
-                <section class="box">
+                <section class="box-left">
                     <header>
-                        <h2>Game status</h2>
+                        <h2 id="gameId">Game status</h2>
                     </header>
                     <table border="1">
                         <tr>
-                            <td colspan="3"> Player Name</td>
+                            <td colspan="3"><b>Player:</b> <span id="changeName">Player Name</span> </td>
                         </tr>
                         <tr>
-                            <td>Dirty train: <span id="dirty">0</span></td>
-                            <td>Green train: <span id="green">2</span></td>
-                            <td>Coca-Cola: <span id="budget">10</span></td>
+                            <td><b>Dirty train:</b> <span id="dirty">0</span></td>
+                            <td><b>Green train:</b> <span id="green">2</span></td>
+                            <td><b>Coca-Cola:</b> <span id="budget">10</span></td>
                         </tr>
                     </table>
                 </section>
-                <section class="box">
+                <section class="box-left">
                     <header>
                         <h2 id="station-name">Station name</h2>
                     </header>
@@ -72,7 +73,7 @@
                 </section>
             </div>
             <div id="event">
-                <section class="box">
+                <section class="box-right">
                     <header>
                         <h2>Event</h2>
                     </header>
@@ -90,6 +91,29 @@
     <footer class="page-footer">
         <p>© 2023 Metropolia Ryhmä E. All rights reserved.</p>
     </footer>
+    <div id="disappear">
+    <div id="player-modal">
+        <form id="player-form">
+            <input id="player-input" type="text" placeholder="Player name" required>
+
+            <label>
+                <input type="radio" name="difficulty" value="easy" required> Easy
+            </label>
+
+            <label>
+                <input type="radio" name="difficulty" value="medium"> Medium
+            </label>
+
+            <label>
+                <input type="radio" name="difficulty" value="hard"> Hard
+            </label>
+
+            <input type="submit" value="Enter">
+        </form>
+    </div>
+</div>
+
+
 </div>
     <dialog  class="help_menu">
         <span id="close_story">&#x2715;</span>
