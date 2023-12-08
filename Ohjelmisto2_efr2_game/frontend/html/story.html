@@ -23,7 +23,7 @@
         <nav>
             <ul class="flex-wrap">
                 <li class="left-button">
-                    <button>Restart</button>
+                    <button id="restart">Restart</button>
                 </li>
                 <li class="right-button">
                     <button id="story">Story</button>
@@ -90,42 +90,41 @@
     <footer class="page-footer">
         <p>© 2023 Metropolia Ryhmä E. All rights reserved.</p>
     </footer>
-    <div id="disappear">
-    <div id="player-modal">
-        <form id="player-form">
-            <input id="player-input" type="text" placeholder="Player name" required>
-
-            <label>
-                <input type="radio" name="difficulty" value="easy" required> Easy
-            </label>
-
-            <label>
-                <input type="radio" name="difficulty" value="medium"> Medium
-            </label>
-
-            <label>
-                <input type="radio" name="difficulty" value="hard"> Hard
-            </label>
-
-            <input type="submit" value="Enter">
-        </form>
-    </div>
 </div>
 
 
-</div>
-    <dialog  class="help_menu">
-        <span id="close_story">&#x2715;</span>
-        <h1> Story </h1>
-        <p> You are an American that were on trip around the Russia in 1994 (right after Berlin's wall fall),
-            but when you were on your way to the airport, you realized that you lost your passport at some cafe,
-            but you don't remember in which city. You don't have any money left, but you still have your Coca-Cola,
-            that are valued by Russian citizens. Will you find your passport and fly back home or will you get stuck in Russia forever?  </p>
-    </dialog>
-    <dialog class="help_menu">
-        <span id="close_manual">&#x2715;</span>
-        <h1> Manual </h1>
-        <p> Here could be some rules </p>
-    </dialog>
+<dialog  class="help_menu">
+    <span id="close_story">&#x2715;</span>
+    <h1> Story </h1>
+    <p> You are an American that were on trip around the Russia in 1994 (right after Berlin's wall fall),
+        but when you were on your way to the airport, you realized that you lost your passport at some cafe,
+        but you don't remember in which city. You don't have any money left, but you still have your Coca-Cola,
+        that are valued by Russian citizens. Will you find your passport and fly back home or will you get stuck in Russia forever?  </p>
+</dialog>
+<dialog class="help_menu">
+    <span id="close_manual">&#x2715;</span>
+    <h1> Manual </h1>
+    <p> Here could be some rules </p>
+</dialog>
+<dialog id="player-modal" class="help_menu">
+    <form id="player-form" class="flex-wrap">
+        <input id="player-input" type="text" placeholder="Player name" required>
+
+        <label>
+            <input type="radio" name="difficulty" value="easy" required> Easy
+        </label>
+
+        <label>
+            <input type="radio" name="difficulty" value="medium"> Medium
+        </label>
+
+        <label>
+            <input type="radio" name="difficulty" value="hard"> Hard
+        </label>
+
+        <input class="button right-button" id="level_submit" type="submit" value="Enter">
+    </form>
+</dialog>
+
 </body>
 </html>

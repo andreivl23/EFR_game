@@ -4,6 +4,27 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
+/*   Restart   */
+
+function pageLoad() {
+    const modal = document.querySelector('#player-modal')
+    modal.showModal()
+
+    const closeModal = document.querySelector('#level_submit')
+    closeModal.addEventListener('click', () => {
+        modal.close()
+    })
+}
+
+window.onload = pageLoad;
+
+const restart = document.querySelector('#restart')
+restart.addEventListener('click', () => {
+    location.reload()
+});
+
+
+
 
 /*  help menu  */
 
