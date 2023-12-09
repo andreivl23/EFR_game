@@ -60,16 +60,27 @@ def get_balance(game_id):
 
 @app.route('/get/neighbors/<station_id>')  # returns list of connected stations with station name and ID
 def get_neighbors(station_id):
-    sql = (f"SELECT StationName, StationID from Stations, Connections "
-           f"WHERE StationID2 = StationID AND StationID1 = '{station_id}'")
+    sql = (
+        f"SELECT s.StationName, s.StationID, s.lat, s.lng "
+        f"FROM Stations s "
+        f"JOIN Connections c ON s.StationID = c.StationID2 "
+        f"WHERE c.StationID1 = '{station_id}'"
+    )
     cursor = connection.cursor()
     cursor.execute(sql)
     neighbors = cursor.fetchall()
-    neighbors_dictionary = {}
-    num = 0
-    for city in neighbors:
-        num += 1
-        neighbors_dictionary[str(num)] = city
+
+    # Using a dictionary comprehension to create the result dictionary
+    neighbors_dictionary = {
+        str(idx + 1): {
+            "StationName": city[0],
+            "StationID": city[1],
+            "lat": city[2],
+            "lng": city[3],
+        }
+        for idx, city in enumerate(neighbors)
+    }
+
     return neighbors_dictionary
 
 

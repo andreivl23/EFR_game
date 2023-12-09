@@ -1,5 +1,6 @@
 // map initialization
 const map = L.map('map').setView([63, 43], 3.8)  // ([lat "korkeus", long "leveys"], zoom)
+const markerGroup = L.layerGroup().addTo(map);
 
 // svg layer
 
@@ -12,8 +13,32 @@ var imageUrl = '../img/Russia_Rail_Map.svg',
 L.imageOverlay(imageUrl, imageBounds).addTo(map);
 
 
+
 /*   markers   */
 
+var focusIcon = L.icon({
+    iconUrl: '../img/marker.png',
+    iconSize:     [30, 40], // size of the icon
+    iconAnchor:   [15, 40], // point of the icon which will correspond to marker's location
+    popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
+});
+
+async function getNeighbors(current_station) {
+    markerGroup.clearLayers();
+    const response = await fetch(`http://localhost:3000/get/neighbors/${current_station}`);
+    const stations = await response.json();
+    for (let key in stations) {
+        if (stations.hasOwnProperty(key)) {
+          const station = stations[key];
+          const { lat, lng, StationName } = station;
+          const marker = L.marker([lat, lng], {icon: focusIcon}).addTo(map).bindPopup(StationName);
+          markerGroup.addLayer(marker);
+        }
+    }
+}
+
+
+/*
 var SaintPeterburg = L.marker([67.39868, 15.3]).addTo(map);
 var Murmansk = L.marker([70.15467, 25.73]).addTo(map);
 var Arkhangelsk = L.marker([67.444719, 24.4]).addTo(map);
@@ -47,7 +72,7 @@ var UstIlimsk = L.marker([59.859554, 59.2]).addTo(map);
 var Urgal = L.marker([59.95, 83.7]).addTo(map);
 var Khabarovsk = L.marker([59.125561, 87.7]).addTo(map);
 var Vladivostok = L.marker([55.074125, 88.921864]).addTo(map);
-
+*/
 
 
 /*    location by click    */
@@ -61,7 +86,7 @@ function onMapClick(e) {
         .openOn(map);
 }
 
-map.on('click', onMapClick);
+// map.on('click', onMapClick);
 
 /*   Restart   */
 
