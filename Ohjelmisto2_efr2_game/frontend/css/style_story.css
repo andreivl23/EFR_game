@@ -36,11 +36,19 @@ h2 a img {
 }
 
 /* Main html css  */
+table {
+    border-radius: 0.5rem;
+    border-color: #6C1C1C;
+}
+
+th, td {
+    padding: 0.4rem;
+    background-color: #180000;
+}
 
 .secondContainer {
     width: 100%;
     height: auto;
-    border: solid 0.125rem;
     box-sizing: border-box;
 }
 
@@ -70,7 +78,7 @@ h2 a img {
     margin-left: auto;
 }
 
-.flex-wrap li {
+.flex-wrap li{
     margin: 0.5rem;
     border-radius: 0.5rem;
     overflow: hidden;
@@ -123,6 +131,7 @@ button:hover, .button:hover {
     flex-direction: column;
     background-color: white;
     padding: 2rem;
+    border-radius: 0.5rem;
 
 }
 
@@ -144,16 +153,16 @@ label {
 
 #map {
     height: 100vh;
-    border: solid 0.125rem;
     width: 100%;
     background-color: #180000;
 }
 
-#event {
+
+/*#event {
     padding: 0;
     margin: 0;
     background-color: #C0FBFF;
-}
+}*/
 
 #game_menu {
     width: 39%;

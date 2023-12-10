@@ -160,12 +160,17 @@ def check_event(players_location, game_id):
     cursor = connection.cursor(dictionary=True)
     cursor.execute(sql)
     event_dictionary = cursor.fetchall()
+    if not event_dictionary:
+        # No data, handle this case (you can return a default event or raise an exception)
+        default_event = {"name": "Empty Event", "balance": 0, "text": "No event data available", "opened": 1}
+        return default_event
     name = event_dictionary[0]['name']
     balance = event_dictionary[0]['balance']
     text = event_dictionary[0]['text']
     opened = event_dictionary[0]['opened']
     event = {"name": name, "balance": balance, "text": text, "opened": opened}
     if opened == 0:
+        update_balance(balance, game_id)
         sql = (
             f"UPDATE efr_mini.events_location SET opened=1 "
             f"WHERE id={players_location} AND game={game_id} AND opened=0")
