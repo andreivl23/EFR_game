@@ -38,16 +38,12 @@
         <div class="flex-wrap">
             <div id="map" class="min_width"></div>
             <div id="player">
-                <table border="1">
-                    <tr>
-                        <td colspan="3"><b>Player:</b> <span id="changeName">Player Name</span></td>
-                    </tr>
-                    <tr>
-                        <td><b>Dirty train:</b> <span id="dirty">0</span></td>
-                        <td><b>Green train:</b> <span id="green">0</span></td>
-                        <td><b>Coca-Cola:</b> <span id="budget">0</span></td>
-                    </tr>
-                </table>
+                <div>
+                    <p colspan="3"><b>Player:</b> <span id="changeName">Player Name</span></p>
+                    <p><b>Dirty train:</b> <span id="dirty">0</span></p>
+                    <p><b>Green train:</b> <span id="green">0</span></p>
+                    <p><b>Coca-Cola:</b> <span id="budget">0</span></p>
+                </div>
             </div>
 
         </div>
@@ -78,7 +74,7 @@
 </dialog>
 <dialog id="win" class="help_menu">
     <span id="close_win">&#x2715;</span>
-    <img src="../img/win2.gif" alt="You Win!">
+    <img id="youWin" src="../img/win2.gif" alt="You Win!">
 </dialog>
 <div id="disappear">
     <div id="beginner-modal">
