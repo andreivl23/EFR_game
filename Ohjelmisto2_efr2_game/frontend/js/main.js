@@ -29,6 +29,7 @@ var focusIcon = L.icon({
     popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
 });
 
+
 /*  functions  */
 
 async function getBalance() {
@@ -73,17 +74,41 @@ async function getNeighbors(current_station) {
 
 
 async function getCurrentStation() {
-    await getBalance()
     const response = await fetch(`http://localhost:3000/get/station_id/${gameId}`);
     const station = await response.json();
+    await checkEvent(station.Location)
     await getNeighbors(station.Location);
+    await getBalance();
 }
 
 async function moveTo(stationId, option) {
     const response = await fetch(`http://localhost:3000//move/${stationId}/${gameId}/${option}`);
-    const something = await response.json()
-    await getCurrentStation()
+    const something = await response.json();
+    await getCurrentStation();
 }
+
+async function checkEvent(location){
+    const response = await fetch(`http://localhost:3000//check/event/${location}/${gameId}`);
+    const event = await response.json();
+    console.log('Event condition:', event.opened);
+    if (event.opened == 0) {
+        const closeEvent = document.querySelector('#close_event')
+        closeEvent.addEventListener('click', () => {
+            dialog.close();
+            if (event.name == 'passport'){
+                const win = document.getElementById('win');
+                const closeWin = document.querySelector('#close_win');
+                closeWin.addEventListener('click', () => {win.close()});
+                win.showModal();
+            }
+        });
+        const dialog = document.getElementById('event');
+        dialog.querySelector('h1').textContent = event.name
+        dialog.querySelector('p').textContent = event.text
+        dialog.showModal();
+    }
+}
+
 
 
 
@@ -104,7 +129,7 @@ document.getElementById('player-form').addEventListener('submit', function (evt)
 
     (async function() {
     try {
-    const response = await fetch(`${url}/create/${playerName}/${difficulty}`);
+    const response = await fetch(`http://localhost:3000/create/${playerName}/${difficulty}`);
     const data = await response.json();
     gameId = data.GameID;
 
@@ -173,7 +198,6 @@ const closeStory = document.querySelector('#close_story')
 const closeLeManuelle = document.querySelector('#close_manual')
 
 story.addEventListener('click', () => {
-    console.log(dialog[0])
     dialog[0].showModal();
 });
 
@@ -182,11 +206,9 @@ manual.addEventListener('click', () => {
 });
 
 closeStory.addEventListener('click', () => {
-    console.log('click')
     dialog[0].close();
 });
 
 closeLeManuelle.addEventListener('click', () => {
-    console.log('click')
     dialog[1].close();
 });

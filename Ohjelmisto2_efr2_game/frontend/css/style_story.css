@@ -40,7 +40,6 @@ h2 a img {
 .secondContainer {
     width: 100%;
     height: auto;
-    border: solid 0.125rem;
     box-sizing: border-box;
 }
 
@@ -123,6 +122,7 @@ button:hover, .button:hover {
     flex-direction: column;
     background-color: white;
     padding: 2rem;
+    border-radius: 0.5rem;
 
 }
 
@@ -144,16 +144,16 @@ label {
 
 #map {
     height: 100vh;
-    border: solid 0.125rem;
     width: 100%;
     background-color: #180000;
 }
 
-#event {
+
+/*#event {
     padding: 0;
     margin: 0;
     background-color: #C0FBFF;
-}
+}*/
 
 #game_menu {
     width: 39%;
