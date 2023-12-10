@@ -122,6 +122,14 @@ def check_event(players_location, game_id):
     return event
 
 
+@app.route('/get/currentstation/<game_id>')
+def get_currentstation(game_id):
+    sql = f"SELECT Location FROM Game Where GameID = {game_id}"
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute(sql)
+    stationid = cursor.fetchone()
+    return stationid
+
 # INTERNAL FUNCTIONS ---------------------------------------------------------------------------
 
 def update_balance(amount, game_id):
