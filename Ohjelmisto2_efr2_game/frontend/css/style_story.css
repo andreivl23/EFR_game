@@ -36,6 +36,15 @@ h2 a img {
 }
 
 /* Main html css  */
+table {
+    border-radius: 0.5rem;
+    border-color: #6C1C1C;
+}
+
+th, td {
+    padding: 0.4rem;
+    background-color: #180000;
+}
 
 .secondContainer {
     width: 100%;
@@ -69,7 +78,7 @@ h2 a img {
     margin-left: auto;
 }
 
-.flex-wrap li {
+.flex-wrap li{
     margin: 0.5rem;
     border-radius: 0.5rem;
     overflow: hidden;

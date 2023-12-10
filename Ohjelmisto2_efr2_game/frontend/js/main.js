@@ -19,6 +19,8 @@ var url= 'http://127.0.0.1:3000';
 var playerName;
 var difficulty;
 var gameId;
+let dirty = 0;
+let green = 0;
 
 /*   markers   */
 
@@ -53,7 +55,9 @@ async function getNeighbors(current_station) {
           buttonElement.textContent = 'Go Green';
           buttonElement.addEventListener('click', () => {
               console.log(`Button clicked for station ${StationName} ${StationID}`);
-              moveTo(StationID, 'green')
+              green ++;
+              document.getElementById('green').innerText = green;
+              moveTo(StationID, 'green');
           });
           popupContent.appendChild(buttonElement);
 
@@ -61,7 +65,9 @@ async function getNeighbors(current_station) {
           buttonElement2.textContent = 'Dirty Boy';
           buttonElement2.addEventListener('click', () => {
               console.log(`Button clicked for station ${StationName} ${StationID}`);
-              moveTo(StationID, 'dirty')
+              dirty ++;
+              document.getElementById('dirty').innerText = dirty;
+              moveTo(StationID, 'dirty');
           });
           popupContent.appendChild(buttonElement2);
 
@@ -76,7 +82,7 @@ async function getNeighbors(current_station) {
 async function getCurrentStation() {
     const response = await fetch(`http://localhost:3000/get/station_id/${gameId}`);
     const station = await response.json();
-    await checkEvent(station.Location)
+    await checkEvent(station.Location);
     await getNeighbors(station.Location);
     await getBalance();
 }
@@ -151,7 +157,6 @@ document.getElementById('player-form').addEventListener('submit', function (evt)
 
 
 
-
 // Define the bounding box coordinates
 const southWest = L.latLng(5, -80);
 const northEast = L.latLng(90, 160);
@@ -186,7 +191,6 @@ const restart = document.querySelector('#restart')
 restart.addEventListener('click', () => {
     location.reload()
 });
-
 
 
 /*  help menu  */
