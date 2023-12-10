@@ -48,7 +48,7 @@ h2 a img {
     color: black;
     padding: 0.5rem;
     border-top: solid 0.125rem;
-    background-color: #F47B7B;
+    background-color: #6C1C1C;
 }
 
 .title {
@@ -113,9 +113,10 @@ label {
 /*       MAIN VIEW         */
 
 #map {
-    height: 540px;
+    height: 100vh;
     border: solid 0.125rem;
-    width: 60%;
+    width: 100%;
+    background-color: #180000;
 }
 
 #event {
@@ -181,6 +182,6 @@ dialog span {
 
     #map{
         width: 100%;
-        height: 30rem;
+        height: 100vh;
     }
 }
