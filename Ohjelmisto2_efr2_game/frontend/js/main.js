@@ -4,7 +4,7 @@ const markerGroup = L.layerGroup().addTo(map);
 
 // svg layer
 
-var imageUrl = '../img/Russia_Rail_Map.svg',
+var imageUrl = '../img/redmapwhitefixed.svg',
     imageBounds = [
         [0, 0],
         [100, 100]
@@ -36,8 +36,20 @@ async function getNeighbors(current_station) {
         }
     }
 }
+// Define the bounding box coordinates
+const southWest = L.latLng(5, -80);
+const northEast = L.latLng(90, 160);
+const bounds = L.latLngBounds(southWest, northEast);
 
+// Set maximum bounds for map dragging
+map.setMaxBounds(bounds);
 
+// Set minimum and maximum zoom levels
+const minZoom = 3;
+const maxZoom = 5;
+
+map.setMinZoom(minZoom);
+map.setMaxZoom(maxZoom);
 /*
 var SaintPeterburg = L.marker([67.39868, 15.3]).addTo(map);
 var Murmansk = L.marker([70.15467, 25.73]).addTo(map);
@@ -86,7 +98,7 @@ function onMapClick(e) {
         .openOn(map);
 }
 
-// map.on('click', onMapClick);
+map.on('click', onMapClick);
 
 /*   Restart   */
 
