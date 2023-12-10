@@ -87,7 +87,7 @@ def get_neighbors(station_id):
 @app.route('/move/<station_id>/<game_id>/<option>')  # Changes player location to specified station
 def moveto(station_id, game_id, option):
     cost = -1
-    if option != "green":
+    if option == "green":
         cost = -2
     sql = f"UPDATE Game SET Location = '{station_id}' WHERE gameid = {game_id} "
     cursor = connection.cursor()
