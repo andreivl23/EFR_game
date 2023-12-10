@@ -1,6 +1,6 @@
 
 from database import make_connection
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 from flask_cors import CORS
 import random
 
@@ -19,33 +19,84 @@ CORS(app)
                                                     changes opened to 1 if it was 0. 
 """
 
+
+# INTERNAL FUNCTIONS ---------------------------------------------------------------------------
+
+def update_balance(amount, game_id):
+    sql = f"UPDATE game SET Balance = Balance+({amount}) WHERE GameID = '{game_id}'"
+    cursor = connection.cursor()
+    cursor.execute(sql)
+
+
+def get_events():  # Gets list of events
+    sql = "SELECT id, name, balance, probability FROM events;"
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    return result
+
+
+def get_passport(game_id):
+    sql = f"SELECT id FROM events_location WHERE event = 1 AND game = {game_id}"
+    cursor = connection.cursor()
+    cursor.execute(sql)
+    passport_station_id = cursor.fetchone()
+    return passport_station_id[0]
+
+# Flask FUNCTIONS ---------------------------------------------------------------------------
+
+
 @app.route('/')
 @app.route('/home')
 def index():
     return render_template('index.html')
+
+
 @app.route('/escape-from-russia')
 def story():
     return render_template('story.html')
 
 
-@app.route('/start/<player>/<current_station>/<resource>')  # Starts game, appends events to random locations.
-def start(resource, current_station, player):
-    sql = f"INSERT INTO game (ScreenName, Location, Balance) VALUES ('{player}', {current_station}, {resource});"
-    cursor = connection.cursor(dictionary=True)
-    cursor.execute(sql)
-    game_id = cursor.lastrowid
-    events = get_events()
-    events_list = []
-    for event in events:
-        for i in range(0, event['probability'], 1):
-            events_list.append(event['id'])
-    t_stations = random.sample(range(1, 34), 33)
-    for i, event_id in enumerate(events_list):
-        sql = f"INSERT INTO events_location (id, game, event)" \
-          f" VALUES ({t_stations[i]}, {game_id}, {event_id});"
+@app.route('/create/<player>/<resource>')
+def create(player, resource):
+    try:
+        if resource == 'easy':
+            resource = 15
+        elif resource == 'medium':
+            resource = 10
+        else:
+            resource = 5
+
+        if player == 'Hero':
+            resource = 9999
+
+        current_station = 7
+        sql = f"INSERT INTO game (ScreenName, Location, Balance) VALUES ('{player}', {current_station}, {resource});"
         cursor = connection.cursor(dictionary=True)
         cursor.execute(sql)
-    return {"game id": game_id, "station": current_station}
+        game_id = cursor.lastrowid
+
+        events = get_events()
+        events_list = []
+        for event in events:
+            for i in range(0, event['probability'], 1):
+                events_list.append(event['id'])
+
+        t_stations = random.sample(range(1, 34), 33)
+        for i, event_id in enumerate(events_list):
+            sql = f"INSERT INTO events_location (id, game, event)" \
+                f" VALUES ({t_stations[i]}, {game_id}, {event_id});"
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute(sql)
+
+        connection.commit()
+
+        response_data = {'status': 'OK', 'GameID': game_id}
+        return jsonify(response_data), 200
+    except Exception as e:
+        print('Error:', e)
+        response_data = {'status': 'error', 'message': 'Internal server error'}
+        return jsonify(response_data), 500
 
 
 @app.route('/get/balance/<game_id>')  # returns balance of game session
@@ -122,37 +173,13 @@ def check_event(players_location, game_id):
     return event
 
 
-@app.route('/get/currentstation/<game_id>')
-def get_currentstation(game_id):
+@app.route('/get/station_id/<game_id>')
+def get_current_station(game_id):
     sql = f"SELECT Location FROM Game Where GameID = {game_id}"
     cursor = connection.cursor(dictionary=True)
     cursor.execute(sql)
-    stationid = cursor.fetchone()
-    return stationid
-
-# INTERNAL FUNCTIONS ---------------------------------------------------------------------------
-
-def update_balance(amount, game_id):
-    sql = f"UPDATE game SET Balance = Balance+({amount}) WHERE GameID = '{game_id}'"
-    cursor = connection.cursor()
-    cursor.execute(sql)
-    return get_balance(game_id)
-
-
-def get_events():  # Gets list of events
-    sql = "SELECT id, name, balance, probability FROM events;"
-    cursor = connection.cursor(dictionary=True)
-    cursor.execute(sql)
-    result = cursor.fetchall()
-    return result
-
-
-def get_passport(game_id):
-    sql = f"SELECT id FROM events_location WHERE event = 1 AND game = {game_id}"
-    cursor = connection.cursor()
-    cursor.execute(sql)
-    passport_station_id = cursor.fetchone()
-    return passport_station_id[0]
+    station_id = cursor.fetchone()
+    return station_id
 
 
 if __name__ == '__main__':
