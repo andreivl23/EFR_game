@@ -54,7 +54,7 @@ var focusIcon = L.icon({
 
 
 async function getBalance() {
-    const response = await fetch(`http://localhost:3000/get/balance/${gameId}`);
+    const response = await fetch(`${url}/get/balance/${gameId}`);
     const balance = await response.json();
     document.getElementById('budget').innerText = balance.balance
 }
@@ -62,7 +62,7 @@ async function getBalance() {
 
 async function getNeighbors(current_station) {
     markerGroup.clearLayers();
-    const response = await fetch(`http://localhost:3000/get/neighbors/${current_station}`);
+    const response = await fetch(`${url}/get/neighbors/${current_station}`);
     const stations = await response.json();
     for (let key in stations) {
         if (stations.hasOwnProperty(key)) {
@@ -102,7 +102,7 @@ async function getNeighbors(current_station) {
 
 
 async function getCurrentStation() {
-    const response = await fetch(`http://localhost:3000/get/station_id/${gameId}`);
+    const response = await fetch(`${url}/get/station_id/${gameId}`);
     const station = await response.json();
     await checkEvent(station.Location);
     await getNeighbors(station.Location);
@@ -110,13 +110,13 @@ async function getCurrentStation() {
 }
 
 async function moveTo(stationId, option) {
-    const response = await fetch(`http://localhost:3000//move/${stationId}/${gameId}/${option}`);
+    const response = await fetch(`${url}//move/${stationId}/${gameId}/${option}`);
     const something = await response.json();
     await getCurrentStation();
 }
 
 async function checkEvent(location){
-    const response = await fetch(`http://localhost:3000//check/event/${location}/${gameId}`);
+    const response = await fetch(`${url}//check/event/${location}/${gameId}`);
     const event = await response.json();
     console.log('Event condition:', event.opened);
     if (event.opened == 0 && event.name != 'passport') {
@@ -160,7 +160,7 @@ document.getElementById('player-form').addEventListener('submit', function (evt)
 
     (async function() {
     try {
-    const response = await fetch(`http://localhost:3000/create/${playerName}/${difficulty}`);
+    const response = await fetch(`${url}/create/${playerName}/${difficulty}`);
     const data = await response.json();
     gameId = data.GameID;
 
