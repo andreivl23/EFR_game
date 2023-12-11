@@ -115,21 +115,20 @@ async function checkEvent(location){
     const response = await fetch(`http://localhost:3000//check/event/${location}/${gameId}`);
     const event = await response.json();
     console.log('Event condition:', event.opened);
-    if (event.opened == 0) {
-        const closeEvent = document.querySelector('#close_event')
-        closeEvent.addEventListener('click', () => {
-            dialog.close();
-            if (event.name == 'passport'){
-                const win = document.getElementById('win');
-                const closeWin = document.querySelector('#close_win');
-                closeWin.addEventListener('click', () => {win.close()});
-                win.showModal();
-            }
-        });
+    if (event.opened == 0 && event.name != 'passport') {
+        const closeEvent = document.querySelector('#close_event');
+        closeEvent.addEventListener('click', () => { dialog.close() });
         const dialog = document.getElementById('event');
         dialog.querySelector('h1').textContent = event.name
         dialog.querySelector('p').textContent = event.text
         dialog.showModal();
+    } else if (event.name == 'passport'){
+
+        // Tähän tulee viimäinen statistiikka ikkuna, jolla arvioidan kestävän kehityksen päämäärät
+        // Ja se luultavasti pitää olla erilisilla funktiona
+
+        const win = document.getElementById('win');
+        win.showModal();
     }
 }
 
@@ -191,11 +190,13 @@ function onMapClick(e) {
 
 /*   Restart   */
 
-const restart = document.querySelector('#restart')
-restart.addEventListener('click', () => {
+const restart = document.querySelectorAll('.restart')
+restart[0].addEventListener('click', () => {
     location.reload()
 });
-
+restart[1].addEventListener('click', () => {
+    location.reload()
+});
 
 /*  help menu  */
 
