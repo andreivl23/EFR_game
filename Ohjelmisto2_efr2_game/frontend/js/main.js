@@ -33,6 +33,7 @@ map.setMaxZoom(maxZoom);
 var url= 'http://127.0.0.1:3000';
 var playerName;
 var difficulty;
+var gameRound;
 var gameId;
 let dirty = 0;
 let green = 0;
@@ -48,6 +49,9 @@ var focusIcon = L.icon({
 
 
 /*  functions  */
+
+
+
 
 async function getBalance() {
     const response = await fetch(`http://localhost:3000/get/balance/${gameId}`);
@@ -119,7 +123,7 @@ async function checkEvent(location){
         const closeEvent = document.querySelector('#close_event');
         closeEvent.addEventListener('click', () => { dialog.close() });
         const dialog = document.getElementById('event');
-        dialog.querySelector('h1').textContent = event.name
+        dialog.querySelector('h1').textContent = event.name.charAt(0).toUpperCase() + event.name.slice(1);
         dialog.querySelector('p').textContent = event.text
         dialog.showModal();
     } else if (event.name == 'passport'){
@@ -146,7 +150,11 @@ async function checkEvent(location){
 document.getElementById('player-form').addEventListener('submit', function (evt) {
     evt.preventDefault();
 
-    var gameRound = 1;
+    const audio = new Audio('../audio/open-the-can.mp3');
+        audio.play();
+
+
+    gameRound = 1;
     playerName = document.getElementById('player-input').value;
     difficulty = document.querySelector('input[name="difficulty"]:checked').value;
 
@@ -198,6 +206,7 @@ restart[1].addEventListener('click', () => {
     location.reload()
 });
 
+
 /*  help menu  */
 
 const story = document.querySelector('#story')
@@ -207,10 +216,14 @@ const closeStory = document.querySelector('#close_story')
 const closeLeManuelle = document.querySelector('#close_manual')
 
 story.addEventListener('click', () => {
+    const audio = new Audio('../audio/open-the-can.mp3');
+    audio.play();
     dialog[0].showModal();
 });
 
 manual.addEventListener('click', () => {
+    const audio = new Audio('../audio/open-the-can.mp3');
+    audio.play();
     dialog[1].showModal();
 });
 

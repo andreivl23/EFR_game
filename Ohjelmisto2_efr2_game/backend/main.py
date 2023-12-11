@@ -170,11 +170,11 @@ def check_event(players_location, game_id):
     opened = event_dictionary[0]['opened']
     event = {"name": name, "balance": balance, "text": text, "opened": opened}
     if opened == 0:
-        update_balance(balance, game_id)
         sql = (
             f"UPDATE efr_mini.events_location SET opened=1 "
             f"WHERE id={players_location} AND game={game_id} AND opened=0")
         cursor.execute(sql)
+        update_balance(balance, game_id)
     return event
 
 
