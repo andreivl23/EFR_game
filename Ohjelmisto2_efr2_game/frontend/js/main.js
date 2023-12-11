@@ -12,6 +12,21 @@ var imageUrl = '../img/redmapwhitefixed.svg',
 
 L.imageOverlay(imageUrl, imageBounds).addTo(map);
 
+// Define the bounding box coordinates
+const southWest = L.latLng(5, -80);
+const northEast = L.latLng(90, 160);
+const bounds = L.latLngBounds(southWest, northEast);
+
+// Set maximum bounds for map dragging
+map.setMaxBounds(bounds);
+
+// Set minimum and maximum zoom levels
+const minZoom = 3;
+const maxZoom = 5;
+
+map.setMinZoom(minZoom);
+map.setMaxZoom(maxZoom);
+
 
 // global variables
 
@@ -50,9 +65,11 @@ async function getNeighbors(current_station) {
           const station = stations[key];
           const { lat, lng, StationName, StationID } = station;
           const popupContent = document.createElement('div')
+          popupContent.innerHTML = '<p><b>Witch train do you prefer ?</b></p>'
 
           const buttonElement = document.createElement('button');
-          buttonElement.textContent = 'Go Green';
+          buttonElement.id = 'go_green'
+          buttonElement.textContent = 'Electric';
           buttonElement.addEventListener('click', () => {
               console.log(`Button clicked for station ${StationName} ${StationID}`);
               green ++;
@@ -62,7 +79,8 @@ async function getNeighbors(current_station) {
           popupContent.appendChild(buttonElement);
 
           const buttonElement2 = document.createElement('button');
-          buttonElement2.textContent = 'Dirty Boy';
+          buttonElement2.id = 'go_dirty'
+          buttonElement2.textContent = 'Diesel';
           buttonElement2.addEventListener('click', () => {
               console.log(`Button clicked for station ${StationName} ${StationID}`);
               dirty ++;
@@ -157,20 +175,6 @@ document.getElementById('player-form').addEventListener('submit', function (evt)
 
 
 
-// Define the bounding box coordinates
-const southWest = L.latLng(5, -80);
-const northEast = L.latLng(90, 160);
-const bounds = L.latLngBounds(southWest, northEast);
-
-// Set maximum bounds for map dragging
-map.setMaxBounds(bounds);
-
-// Set minimum and maximum zoom levels
-const minZoom = 3;
-const maxZoom = 5;
-
-map.setMinZoom(minZoom);
-map.setMaxZoom(maxZoom);
 
 /*    location by click    */
 
