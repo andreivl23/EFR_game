@@ -7,7 +7,12 @@
     <title>Escape from Russia</title>
     <link rel="icon" href="../img/home_page_logo.png" type="image/png">
     <link rel="stylesheet" href="../css/style.css">
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const audio = document.getElementById('audio');
+            audio.volume = 0.5;
+        });
+    </script>
 </head>
 <body>
 <div class="container">
@@ -31,9 +36,8 @@
         <img src="../img/icon_train.png" alt="train">
     </div>
 </div>
-<audio id="audio" controls autoplay loop>
-    <source src="../audio/Soviet_March.mp3" type="audio/mpeg">
+<audio id="audio" controls loop>
+    <source src="../audio/we-wish-you-a-merry-christmas.mp3" type="audio/mpeg">
 </audio>
-
 </body>
 </html>
