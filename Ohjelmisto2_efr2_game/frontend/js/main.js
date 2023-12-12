@@ -55,7 +55,7 @@ const currentIcon = L.icon({
 
 
 /*  functions  */
-
+updateButtonState(2) // disables Get letter button
 
 
 
@@ -63,8 +63,32 @@ async function getBalance() {
     const response = await fetch(`${url}/get/balance/${gameId}`);
     const balance = await response.json();
     document.getElementById('budget').innerText = balance.balance
+    return {"balance": balance.balance}
 }
 
+function updateButtonState(option) {
+  const button = document.getElementById('passport');
+
+  if (option == 1) {
+    // Remove the lock icon and update styles when the condition is met
+    button.innerHTML = 'Get letter';
+    button.style.backgroundColor = 'gold';
+    button.style.color = 'black';
+    button.disabled = false;
+  } else if (option == 2) {
+    // Restore the original button content and styles when the condition is not met
+    button.innerHTML = 'Get letter<img src="../img/lock.png" alt="Lock Icon" class="lock-icon">';
+    button.style.backgroundColor = '#9c9c9c';
+    button.style.color = '#454545';
+    button.disabled = true;
+  } else {
+    // Restore the original button content and styles when the condition is not met
+    button.innerHTML = `First letter is: ${option}`;
+    button.style.backgroundColor = 'rgb(117, 0, 0)';
+    button.style.color = 'white';
+    button.disabled = true;
+  }
+}
 
 async function getNeighbors(current_station) {
     markerGroup.clearLayers();
