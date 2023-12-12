@@ -97,6 +97,19 @@ button, .button {
     padding: 0.7rem 1.4rem;
 }
 
+#passport:disabled {
+    background-color: #9c9c9c;
+    color: #454545;
+    font-size: 1.1rem;
+}
+.lock-icon {
+    margin-left: 5px;
+}
+#passport:not(:disabled) {
+    background-color: gold;
+}
+
+
 #go_green {
     display: inline-block;
     align-self: flex-start;
