@@ -262,4 +262,9 @@ dialog span {
         width: 100%;
         height: 100vh;
     }
+     #player {
+        position: absolute;
+        top: 15rem;
+        left: 10rem;
+    }
 }
