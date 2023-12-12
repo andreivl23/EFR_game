@@ -62,8 +62,16 @@ const currentIcon = L.icon({
 async function getBalance() {
     const response = await fetch(`${url}/get/balance/${gameId}`);
     const balance = await response.json();
-    document.getElementById('budget').innerText = balance.balance
+    const balanceInt = parseInt(balance.balance);
+
+    if (balanceInt <= 0) {
+        balance.balance = '0';
+        document.getElementById('budget').innerText = balance.balance;
+    } else {
+        document.getElementById('budget').innerText = balance.balance;
+    }
 }
+
 
 
 async function getNeighbors(current_station) {
@@ -123,7 +131,8 @@ async function getCurrentStation() {
     const marker = L.marker([lat, lng], {icon: currentIcon}).addTo(map).bindPopup("You are at "+ stationName);
     markerGroup.addLayer(marker);
     await getBalance();
-}
+    }
+
 
 async function moveTo(stationId, option) {
     const response = await fetch(`${url}//move/${stationId}/${gameId}/${option}`);
@@ -134,7 +143,8 @@ async function checkEvent(location){
     const response = await fetch(`${url}//check/event/${location}/${gameId}`);
     const event = await response.json();
     console.log('Event condition:', event.opened);
-    if (event.opened == 0 && event.name != 'passport') {
+    const balance = document.getElementById('budget').innerText;;
+    if (event.opened == 0 && balance != '0') {
         const closeEvent = document.querySelector('#close_event');
         closeEvent.addEventListener('click', () => { dialog.close() });
         const dialog = document.getElementById('event');
@@ -147,7 +157,16 @@ async function checkEvent(location){
         // Ja se luultavasti pitää olla erilisilla funktiona
 
         const win = document.getElementById('win');
+        const audio = new Audio('../audio/success-trumpets.mp3');
+        audio.play();
+
         win.showModal();
+    }
+    else if (balance === '0') {
+    const lost = document.getElementById('lost');
+    const audio = new Audio('../audio/jingle-bells.mp3');
+    audio.play();
+    lost.showModal();
     }
 }
 
@@ -165,11 +184,9 @@ async function checkEvent(location){
 document.getElementById('player-form').addEventListener('submit', function (evt) {
     evt.preventDefault();
 
-    const audio = new Audio('../audio/open-the-can.mp3');
+    const audio = new Audio('../audio/trainwhistle.mp3');
         audio.play();
 
-
-    gameRound = 1;
     playerName = document.getElementById('player-input').value;
     difficulty = document.querySelector('input[name="difficulty"]:checked').value;
 
@@ -185,8 +202,7 @@ document.getElementById('player-form').addEventListener('submit', function (evt)
 
     // GAME START HERE
 
-
-    getCurrentStation()
+    await getCurrentStation()
 
     } catch(error) {
         console.error(error);
@@ -221,6 +237,11 @@ restart[1].addEventListener('click', () => {
     location.reload()
 });
 
+restart[2].addEventListener('click', () => {
+    location.reload()
+});
+
+
 
 /*  help menu  */
 
@@ -231,13 +252,13 @@ const closeStory = document.querySelector('#close_story')
 const closeLeManuelle = document.querySelector('#close_manual')
 
 story.addEventListener('click', () => {
-    const audio = new Audio('../audio/open-the-can.mp3');
+    const audio = new Audio('../audio/pageturn.mp3');
     audio.play();
     dialog[0].showModal();
 });
 
 manual.addEventListener('click', () => {
-    const audio = new Audio('../audio/open-the-can.mp3');
+    const audio = new Audio('../audio/page-turn2.mp3');
     audio.play();
     dialog[1].showModal();
 });
