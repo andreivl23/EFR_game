@@ -75,7 +75,7 @@ async function getNeighbors(current_station) {
           const station = stations[key];
           const { lat, lng, StationName, StationID } = station;
           const popupContent = document.createElement('div')
-          popupContent.innerHTML = '<p><b>Witch train do you prefer ?</b></p>'
+          popupContent.innerHTML = `<h2>${StationName}</h2><p><b>Witch train do you prefer ?</b></p>`
 
           const buttonElement = document.createElement('button');
           buttonElement.id = 'go_green'
@@ -119,7 +119,8 @@ async function getCurrentStation() {
     await checkEvent(station.Location);
     await getNeighbors(station.Location);
     const coordinates = await getCoordinates(station.Location)
-    const marker = L.marker([coordinates.lat, coordinates.lng], {icon: currentIcon}).addTo(map);
+    const { lat, lng, stationName } = coordinates;
+    const marker = L.marker([lat, lng], {icon: currentIcon}).addTo(map).bindPopup("You are at "+ stationName);
     markerGroup.addLayer(marker);
     await getBalance();
 }
