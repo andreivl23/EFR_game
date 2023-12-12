@@ -75,7 +75,7 @@ async function getNeighbors(current_station) {
           const station = stations[key];
           const { lat, lng, StationName, StationID } = station;
           const popupContent = document.createElement('div')
-          popupContent.innerHTML = `<h2>${StationName}</h2><p><b>Witch train do you prefer ?</b></p>`
+          popupContent.innerHTML = `<h2>${StationName}</h2><p><b>Which train do you prefer ?</b></p>`
 
           const buttonElement = document.createElement('button');
           buttonElement.id = 'go_green'
