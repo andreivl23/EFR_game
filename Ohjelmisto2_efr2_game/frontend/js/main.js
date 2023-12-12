@@ -55,21 +55,14 @@ const currentIcon = L.icon({
 
 
 /*  functions  */
-updateButtonState(2) // disables Get letter button
 
 
 
 async function getBalance() {
     const response = await fetch(`${url}/get/balance/${gameId}`);
     const balance = await response.json();
-    const balanceInt = parseInt(balance.balance);
-    if (balanceInt <= 0) {
-        document.getElementById('budget').innerText = '0';
-    }
-    else {
-        document.getElementById('budget').innerText = balance.balance
-    }
-    return {"balance": balance.balance}
+    document.getElementById('budget').innerText = balance.balance
+    return balance.balance
 }
 
 function updateButtonState(option) {
@@ -152,7 +145,8 @@ async function getCurrentStation() {
     const { lat, lng, stationName } = coordinates;
     const marker = L.marker([lat, lng], {icon: currentIcon}).addTo(map).bindPopup("You are at "+ stationName);
     markerGroup.addLayer(marker);
-    await getBalance();
+    const balance = await getBalance();
+    checkBalanceCondition(balance);
 }
 
 async function moveTo(stationId, option) {
@@ -163,36 +157,34 @@ async function moveTo(stationId, option) {
 async function checkEvent(location){
     const response = await fetch(`${url}//check/event/${location}/${gameId}`);
     const event = await response.json();
-    const balance = document.getElementById('budget').innerText;
     console.log('Event condition:', event.opened);
-    if (event.name == 'passport'){
-
-        // Tähän tulee viimäinen statistiikka ikkuna, jolla arvioidan kestävän kehityksen päämäärät
-        // Ja se luultavasti pitää olla erilisilla funktiona
-
-        const win = document.getElementById('win');
-        const audio = new Audio('../audio/success-trumpets.mp3');
-        audio.play();
-        win.showModal();
-    }
-    else if (balance == '0') {
-        const lose = document.getElementById('lose');
-        const audio = new Audio('../audio/jingle-bells.mp3');
-        audio.play();
-        lose.showModal()
-    }
-
-    else if (event.opened == 0 && event.name != 'passport') {
+    if (event.opened == 0 && event.name != 'passport') {
         const closeEvent = document.querySelector('#close_event');
         closeEvent.addEventListener('click', () => { dialog.close() });
         const dialog = document.getElementById('event');
         dialog.querySelector('h1').textContent = event.name.charAt(0).toUpperCase() + event.name.slice(1);
         dialog.querySelector('p').textContent = event.text
         dialog.showModal();
+    } else if (event.name == 'passport'){
+
+        // Tähän tulee viimäinen statistiikka ikkuna, jolla arvioidan kestävän kehityksen päämäärät
+        // Ja se luultavasti pitää olla erilisilla funktiona
+
+        const win = document.getElementById('win');
+        win.showModal();
     }
- }
+}
 
-
+async function checkBalanceCondition(balance) {
+  if (balance <= 5) {
+    updateButtonState(1);
+    document.getElementById('passport').addEventListener('click', async function getPassportLetter(){
+      const response = await fetch(`${url}/get/passport_letter/${gameId}`);
+      const letter = await response.json();
+      updateButtonState(letter.letter)
+    })
+  }
+}
 
 
 
@@ -225,8 +217,8 @@ document.getElementById('player-form').addEventListener('submit', function (evt)
     document.getElementById('disappear').innerHTML = '';
 
     // GAME START HERE
+    updateButtonState(2) // disables Get letter button
 
-    await getBalance()
     getCurrentStation()
 
     } catch(error) {
@@ -241,7 +233,7 @@ document.getElementById('player-form').addEventListener('submit', function (evt)
 
 /*    location by click    */
 
-var popup = L.popup();
+const popup = L.popup();
 
 function onMapClick(e) {
     popup
@@ -262,10 +254,6 @@ restart[1].addEventListener('click', () => {
     location.reload()
 });
 
-restart[2].addEventListener('click', () => {
-    location.reload()
-});
-
 
 /*  help menu  */
 
@@ -276,13 +264,13 @@ const closeStory = document.querySelector('#close_story')
 const closeLeManuelle = document.querySelector('#close_manual')
 
 story.addEventListener('click', () => {
-    const audio = new Audio('../audio/pageturn.mp3');
+    const audio = new Audio('../audio/open-the-can.mp3');
     audio.play();
     dialog[0].showModal();
 });
 
 manual.addEventListener('click', () => {
-    const audio = new Audio('../audio/page-turn2.mp3');
+    const audio = new Audio('../audio/open-the-can.mp3');
     audio.play();
     dialog[1].showModal();
 });
@@ -294,3 +282,5 @@ closeStory.addEventListener('click', () => {
 closeLeManuelle.addEventListener('click', () => {
     dialog[1].close();
 });
+
+/* GET LETTER BUTTON */

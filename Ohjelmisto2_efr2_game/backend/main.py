@@ -195,6 +195,14 @@ def get_coordinates(station_id):
     station_name, lat, lng = cursor.fetchone()
     return {'stationName': station_name, 'lat': lat, 'lng': lng}
 
+@app.route('/get/passport_letter/<game_id>')
+def get_passport_letter(game_id):
+    sql =   (f"SELECT StationName FROM stations JOIN events_location ON stationid = id " 
+        f"WHERE events_location.game = {game_id} AND events_location.event = 1")
+    cursor = connection.cursor()
+    cursor.execute(sql)
+    name = cursor.fetchone()
+    return {"letter": name[0][0]}
 
 if __name__ == '__main__':
     app.run(use_reloader=True, host='127.0.0.1', port=3000)
