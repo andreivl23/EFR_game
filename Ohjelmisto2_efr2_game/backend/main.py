@@ -187,5 +187,14 @@ def get_current_station(game_id):
     return station_id
 
 
+@app.route('/get/coordinates/<station_id>')  # returns list of connected stations with station name and ID
+def get_coordinates(station_id):
+    sql = f"SELECT s.lat, s.lng FROM Stations s WHERE StationID = '{station_id}'"
+    cursor = connection.cursor()
+    cursor.execute(sql)
+    lat, lng = cursor.fetchone()
+    return {'lat': lat, 'lng': lng}
+
+
 if __name__ == '__main__':
     app.run(use_reloader=True, host='127.0.0.1', port=3000)
