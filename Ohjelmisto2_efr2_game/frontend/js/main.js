@@ -55,7 +55,6 @@ const currentIcon = L.icon({
 
 
 /*  functions  */
-updateButtonState(2) // disables Get letter button
 
 
 
@@ -63,7 +62,7 @@ async function getBalance() {
     const response = await fetch(`${url}/get/balance/${gameId}`);
     const balance = await response.json();
     document.getElementById('budget').innerText = balance.balance
-    return {"balance": balance.balance}
+    return balance.balance
 }
 
 function updateButtonState(option) {
@@ -146,7 +145,8 @@ async function getCurrentStation() {
     const { lat, lng, stationName } = coordinates;
     const marker = L.marker([lat, lng], {icon: currentIcon}).addTo(map).bindPopup("You are at "+ stationName);
     markerGroup.addLayer(marker);
-    await getBalance();
+    const balance = await getBalance();
+    checkBalanceCondition(balance);
 }
 
 async function moveTo(stationId, option) {
@@ -175,7 +175,16 @@ async function checkEvent(location){
     }
 }
 
-
+async function checkBalanceCondition(balance) {
+  if (balance <= 5) {
+    updateButtonState(1);
+    document.getElementById('passport').addEventListener('click', async function getPassportLetter(){
+      const response = await fetch(`${url}/get/passport_letter/${gameId}`);
+      const letter = await response.json();
+      updateButtonState(letter.letter)
+    })
+  }
+}
 
 
 
@@ -208,7 +217,7 @@ document.getElementById('player-form').addEventListener('submit', function (evt)
     document.getElementById('disappear').innerHTML = '';
 
     // GAME START HERE
-
+    updateButtonState(2) // disables Get letter button
 
     getCurrentStation()
 
@@ -224,7 +233,7 @@ document.getElementById('player-form').addEventListener('submit', function (evt)
 
 /*    location by click    */
 
-var popup = L.popup();
+const popup = L.popup();
 
 function onMapClick(e) {
     popup
@@ -273,3 +282,5 @@ closeStory.addEventListener('click', () => {
 closeLeManuelle.addEventListener('click', () => {
     dialog[1].close();
 });
+
+/* GET LETTER BUTTON */
