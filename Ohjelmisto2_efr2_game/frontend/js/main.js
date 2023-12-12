@@ -55,16 +55,46 @@ const currentIcon = L.icon({
 
 
 /*  functions  */
-
+updateButtonState(2) // disables Get letter button
 
 
 
 async function getBalance() {
     const response = await fetch(`${url}/get/balance/${gameId}`);
     const balance = await response.json();
-    document.getElementById('budget').innerText = balance.balance
+    const balanceInt = parseInt(balance.balance);
+    if (balanceInt <= 0) {
+        document.getElementById('budget').innerText = '0';
+    }
+    else {
+        document.getElementById('budget').innerText = balance.balance
+    }
+    return {"balance": balance.balance}
 }
 
+function updateButtonState(option) {
+  const button = document.getElementById('passport');
+
+  if (option == 1) {
+    // Remove the lock icon and update styles when the condition is met
+    button.innerHTML = 'Get letter';
+    button.style.backgroundColor = 'gold';
+    button.style.color = 'black';
+    button.disabled = false;
+  } else if (option == 2) {
+    // Restore the original button content and styles when the condition is not met
+    button.innerHTML = 'Get letter<img src="../img/lock.png" alt="Lock Icon" class="lock-icon">';
+    button.style.backgroundColor = '#9c9c9c';
+    button.style.color = '#454545';
+    button.disabled = true;
+  } else {
+    // Restore the original button content and styles when the condition is not met
+    button.innerHTML = `First letter is: ${option}`;
+    button.style.backgroundColor = 'rgb(117, 0, 0)';
+    button.style.color = 'white';
+    button.disabled = true;
+  }
+}
 
 async function getNeighbors(current_station) {
     markerGroup.clearLayers();
@@ -133,23 +163,34 @@ async function moveTo(stationId, option) {
 async function checkEvent(location){
     const response = await fetch(`${url}//check/event/${location}/${gameId}`);
     const event = await response.json();
+    const balance = document.getElementById('budget').innerText;
     console.log('Event condition:', event.opened);
-    if (event.opened == 0 && event.name != 'passport') {
+    if (event.name == 'passport'){
+
+        // Tähän tulee viimäinen statistiikka ikkuna, jolla arvioidan kestävän kehityksen päämäärät
+        // Ja se luultavasti pitää olla erilisilla funktiona
+
+        const win = document.getElementById('win');
+        const audio = new Audio('../audio/success-trumpets.mp3');
+        audio.play();
+        win.showModal();
+    }
+    else if (balance == '0') {
+        const lose = document.getElementById('lose');
+        const audio = new Audio('../audio/jingle-bells.mp3');
+        audio.play();
+        lose.showModal()
+    }
+
+    else if (event.opened == 0 && event.name != 'passport') {
         const closeEvent = document.querySelector('#close_event');
         closeEvent.addEventListener('click', () => { dialog.close() });
         const dialog = document.getElementById('event');
         dialog.querySelector('h1').textContent = event.name.charAt(0).toUpperCase() + event.name.slice(1);
         dialog.querySelector('p').textContent = event.text
         dialog.showModal();
-    } else if (event.name == 'passport'){
-
-        // Tähän tulee viimäinen statistiikka ikkuna, jolla arvioidan kestävän kehityksen päämäärät
-        // Ja se luultavasti pitää olla erilisilla funktiona
-
-        const win = document.getElementById('win');
-        win.showModal();
     }
-}
+ }
 
 
 
@@ -185,7 +226,7 @@ document.getElementById('player-form').addEventListener('submit', function (evt)
 
     // GAME START HERE
 
-
+    await getBalance()
     getCurrentStation()
 
     } catch(error) {
@@ -221,6 +262,10 @@ restart[1].addEventListener('click', () => {
     location.reload()
 });
 
+restart[2].addEventListener('click', () => {
+    location.reload()
+});
+
 
 /*  help menu  */
 
@@ -231,13 +276,13 @@ const closeStory = document.querySelector('#close_story')
 const closeLeManuelle = document.querySelector('#close_manual')
 
 story.addEventListener('click', () => {
-    const audio = new Audio('../audio/open-the-can.mp3');
+    const audio = new Audio('../audio/pageturn.mp3');
     audio.play();
     dialog[0].showModal();
 });
 
 manual.addEventListener('click', () => {
-    const audio = new Audio('../audio/open-the-can.mp3');
+    const audio = new Audio('../audio/page-turn2.mp3');
     audio.play();
     dialog[1].showModal();
 });

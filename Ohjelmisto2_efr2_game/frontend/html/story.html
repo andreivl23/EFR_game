@@ -45,7 +45,7 @@
                     <p colspan="3"><b>Player:</b> <span id="changeName">Player Name</span></p>
                     <p><b>Dirty train:</b> <span id="dirty">0</span></p>
                     <p><b>Green train:</b> <span id="green">0</span></p>
-                    <p><b>Coca-Cola:</b> <span id="budget">1</span></p>
+                    <p><b>Coca-Cola:</b> <span id="budget">0</span></p>
                 </div>
             </div>
 
@@ -66,18 +66,14 @@
 </dialog>
 <dialog class="help_menu">
     <span id="close_manual">&#x2715;</span>
-    <h1>Manual</h1>
-<p>
-    <strong>Your current station is marked as a yellow marker.</strong><br>
-    * You can only move to neighbor cities.<br>
-    * Press the red marker to see a popup window with buttons.<br>
-    * You can select the green train, which costs more (2 Coca-Cola), or Diesel (1 Coca-Cola).<br>
-    * When you move, you will encounter different events that affect your balance of Coca-Cola.<br>
-    * One movement costs 1 Coca-Cola.<br>
-    * Move between stations to find the passport.<br>
-    * If your Coca-Cola balance reaches 0, it's Game Over.
-</p>
-
+    <h1> Manual </h1>
+    <p> * Your current station is marked as yellow marker.<br>
+        * You can only move to neighbor cities. <br>
+        * Press red marker to see popup window with buttons. <br>
+        * You can select green train which costs more (2 Coca-Cola) or Diesel (1 Coca-Cola). <br>
+        * When you move, you will encounter different events that affect your balance of Coca-Cola. <br>
+        * One movement costs 1 Coca-Cola. <br>
+        * Move between stations to find passport. </p>
 </dialog>
 <dialog id="event" class="help_menu">
     <span id="close_event">&#x2715;</span>
@@ -89,9 +85,9 @@
     <span><button class="restart">Restart</button></span>
     <img id="youWin" src="../img/win2.gif" alt="You Win!">
 </dialog>
-<dialog id="lost" class="help_menu">
+<dialog id="lose" class="help_menu">
     <span><button class="restart">Restart</button></span>
-    <img id="youLost" src="../img/lose.gif" alt="You Lost!">
+    <img id="youLose" src="../img/lose.gif" alt="You Lost!">
 </dialog>
 <div id="disappear">
     <div id="beginner-modal">
