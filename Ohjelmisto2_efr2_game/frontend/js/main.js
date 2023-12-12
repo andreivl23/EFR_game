@@ -4,7 +4,7 @@ const markerGroup = L.layerGroup().addTo(map);
 
 // svg layer
 
-var imageUrl = '../img/redmapwhitefixed.svg',
+const imageUrl = '../img/redmapwhitefixed.svg',
     imageBounds = [
         [0, 0],
         [100, 100]
@@ -30,21 +30,27 @@ map.setMaxZoom(maxZoom);
 
 // global variables
 
-var url= 'http://127.0.0.1:3000';
-var playerName;
-var difficulty;
-var gameRound;
-var gameId;
+const url= 'http://127.0.0.1:3000';
+let playerName;
+let difficulty;
+let gameRound;
+let gameId;
 let dirty = 0;
 let green = 0;
 
 /*   markers   */
 
-var focusIcon = L.icon({
+const focusIcon = L.icon({
     iconUrl: '../img/marker.png',
     iconSize:     [30, 40], // size of the icon
     iconAnchor:   [15, 40], // point of the icon which will correspond to marker's location
     popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
+});
+const currentIcon = L.icon({
+    iconUrl: '../img/currentmarker.png',
+    iconSize:     [30, 40],
+    iconAnchor:   [15, 40],
+    popupAnchor:  [0, -40]
 });
 
 
@@ -100,18 +106,26 @@ async function getNeighbors(current_station) {
     }
 }
 
+// Gets coordinates of specified station. Used for placing current station marker.
+async function getCoordinates(station_id) {
+  try {const response = await fetch(`${url}/get/coordinates/${station_id}`);
+  const coordinates = await response.json();
+  return coordinates} catch(error) {console.log("failed fetching coordinates: " + error)}
+}
 
 async function getCurrentStation() {
     const response = await fetch(`${url}/get/station_id/${gameId}`);
     const station = await response.json();
     await checkEvent(station.Location);
     await getNeighbors(station.Location);
+    const coordinates = await getCoordinates(station.Location)
+    const marker = L.marker([coordinates.lat, coordinates.lng], {icon: currentIcon}).addTo(map);
+    markerGroup.addLayer(marker);
     await getBalance();
 }
 
 async function moveTo(stationId, option) {
     const response = await fetch(`${url}//move/${stationId}/${gameId}/${option}`);
-    const something = await response.json();
     await getCurrentStation();
 }
 
