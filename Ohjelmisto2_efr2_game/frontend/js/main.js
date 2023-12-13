@@ -31,6 +31,7 @@ map.setMaxZoom(maxZoom);
 // global variables
 
 const url= 'http://127.0.0.1:3000';
+let clickedLetter = false;
 let playerName;
 let difficulty;
 let gameRound;
@@ -150,7 +151,7 @@ async function getCurrentStation() {
     const marker = L.marker([lat, lng], {icon: currentIcon}).addTo(map).bindPopup("You are at "+ stationName);
     markerGroup.addLayer(marker);
     const balance = await getBalance();
-    checkBalanceCondition(balance);
+    if (!clickedLetter) {checkBalanceCondition(balance);}
 }
 
 async function moveTo(stationId, option) {
@@ -197,6 +198,7 @@ async function checkBalanceCondition(balance) {
       const response = await fetch(`${url}/get/passport_letter/${gameId}`);
       const letter = await response.json();
       updateButtonState(letter.letter)
+      clickedLetter = true
     })
   }
 }
