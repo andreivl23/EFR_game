@@ -273,4 +273,7 @@ dialog span {
     #youLose {
         width: 100%;
     }
+    #lose button{
+        padding: 0.5rem;
+    }
 }
