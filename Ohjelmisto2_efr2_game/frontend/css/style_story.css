@@ -267,4 +267,10 @@ dialog span {
         top: 15rem;
         left: 10rem;
     }
+    #youWin {
+        width: 100%;
+    }
+    #lose {
+        width: 100%;
+    }
 }
