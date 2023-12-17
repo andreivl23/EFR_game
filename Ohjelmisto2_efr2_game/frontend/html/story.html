@@ -20,12 +20,14 @@
 <body>
 <div class="secondContainer">
     <header class="page-header">
-        <nav>
-            <ul class="flex-wrap">
-                <li class="left-button">
-                    <button class="restart">Restart</button>
+        <nav class="flex-wrap">
+            <ul class="left-buttons">
+                <li>
+                    <button class="restart"><img src="../img/reload.png"></button>
                 </li>
-                <li class="right-button">
+            </ul>
+            <ul class="right-buttons">
+                <li>
                     <button id="story">Story</button>
                 </li>
                 <li>
@@ -48,10 +50,8 @@
                     <p><b>Coca-Cola:</b> <span id="budget">1</span></p>
                 </div>
             </div>
-
         </div>
     </main>
-
 </div>
 
 
@@ -78,22 +78,23 @@
 <dialog id="event" class="help_menu">
     <span id="close_event">&#x2715;</span>
     <h1></h1>
+    <h2></h2>
     <p></p>
 </dialog>
-</dialog>
 <dialog id="win" class="help_menu">
-    <span><button class="restart">Restart</button></span>
+    <span><button class="restart"><img src="../img/reload.png"></button></span>
     <img id="youWin" src="../img/win2.gif" alt="You Win!">
+    <h3></h3>
 </dialog>
 <dialog id="lose" class="help_menu">
-    <span><button class="restart">Restart</button></span>
+    <span><button class="restart"><img src="../img/reload.png"></button></span>
     <img id="youLose" src="../img/lose.gif" alt="You Lost!">
+    <h3></h3>
 </dialog>
 <div id="disappear">
     <div id="beginner-modal">
         <form id="player-form">
             <input id="player-input" type="text" placeholder="Player name" required>
-
 
             <label>
                 <input type="radio" name="difficulty" value="easy" required> Easy
