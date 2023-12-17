@@ -1,144 +1,25 @@
-:root {
-
-}
-
-* {
-    box-sizing: border-box;
-}
-
 /* utilities */
 
 .hidden {
     display: none;
 }
 
-/* homepage core css */
-.leaflet-proxy{
-    text-align: center;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    min-width: 19em;
-}
-
-h2 a img {
-    width: 10rem;
-    height: auto;
-    vertical-align: middle;
-    margin: 1rem;
-}
-
-#youWin {
-    object-fit: cover;
-    border-radius: 1.5rem;
-}
-
-.box div {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-color: transparent;
-    border: 6px solid rgba(255,255,255,0.8);
-}
-
-/* Main html css  */
-
-.secondContainer {
-    width: 100%;
-    height: auto;
-    box-sizing: border-box;
-    min-width: 25rem;
-}
-
-.page-header, .page-footer {
-    color: black;
-    padding: 0.5rem;
-    border-top: solid 0.125rem;
-    background-color: #6C1C1C;
-}
-
-.title {
-    color: black;
-}
-
-.flex-wrap {
-    list-style-type: none;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-}
-
-.flex-wrap .left-button {
-    order: -1;
-}
-
-.flex-wrap .right-button{
-    margin-left: auto;
-}
-
-.flex-wrap li{
-    margin: 0.5rem;
-    border-radius: 0.5rem;
-    overflow: hidden;
-    box-sizing: border-box;
-}
-
-button {
-    display: flex;
-}
-
-button, .button {
-    font-size: 1.3rem;
-    background-color: white;
-    border-radius: 2rem;
-    padding: 0.7rem 1.4rem;
-}
-
-#passport:disabled {
-    background-color: #9c9c9c;
-    color: #454545;
-    font-size: 1.1rem;
-}
-.lock-icon {
-    margin-left: 5px;
-}
-#passport:not(:disabled) {
-    background-color: gold;
-}
-
-
-#go_green {
-    display: inline-block;
-    align-self: flex-start;
-}
-
-#go_green:hover {
-    background-color: lightgreen;
-}
-
-#go_dirty {
-    display: inline-block;
-    align-self: flex-end;
-    margin-left: 0.5rem;
-}
-
-#go_dirty:hover {
-    background-color: lightcoral;
-}
-
-
+/* changing default styles*/
 
 ul {
     margin: 0;
     padding: 0;
 }
-
-button:hover, .button:hover {
-    background-color: #C0FBFF;
+body {
+    padding: 0;
+    margin: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+* {
+    box-sizing: border-box;
+}
+
+/*Start game form */
 
 #beginner-modal {
     width: 100vw;
@@ -152,26 +33,14 @@ button:hover, .button:hover {
     align-items: center;
 }
 
-#player {
-    position: absolute;
-    background-color: rgba(24, 0, 0, 0.8);
-    top: 11rem;
-    left: 10rem;
-    transform: translate(-50%, -50%);
-    color: white;
-    z-index: 999;
-    padding: 0.5rem;
-    border-radius: 1rem;
-    min-width: 13rem;
-}
-
 #player-form {
     display: flex;
+    position: fixed;
     flex-direction: column;
     background-color: white;
     padding: 2rem;
+    top: 15vh;
     border-radius: 2rem;
-
 }
 
 #player-form input {
@@ -185,46 +54,128 @@ label {
     margin: 0.25rem;
 }
 
+/*      NAVBAR     */
 
-
-
-/*       MAIN VIEW         */
-
-#map {
-    height: 100vh;
-    width: 100%;
-    background-color: #180000;
-}
-
-
-/*#event {
-    padding: 0;
-    margin: 0;
-    background-color: #C0FBFF;
-}*/
-
-#game_menu {
-    width: 39%;
-    padding: 2rem;
+.secondContainer {
     box-sizing: border-box;
 }
 
-.event-box img {
-    padding: 0;
-    margin: 0;
-    width: 33%;
-    height: auto;
+.page-header {
+    color: black;
+    padding: 0 0.5vw;
+    height: 80px;
+    max-height: 80px;
+    border-top: solid 0.125rem;
+    background-color: #6C1C1C;
 }
+
+.flex-wrap {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.flex-wrap ul{
+    list-style-type: none;
+    margin: 1rem 1vw;
+    box-sizing: border-box;
+}
+
+.right-buttons li{
+    list-style-type: none;
+    display: inline;
+}
+
+/*                 BUTTONS        */
+
+button, .button {
+    font-size: 1.1rem;
+    background-color: white;
+    border-radius: 1rem;
+    padding: 0.7rem 0.7rem;
+}
+
+#passport:disabled {
+    background-color: #9c9c9c;
+    color: #454545;
+    font-size: 1.1rem;
+}
+.lock-icon {
+    margin-left: 5px;
+}
+#passport:not(:disabled) {
+    background-color: gold;
+}
+.restart {
+    padding: 0.7rem 1vw;
+}
+
+.restart img {
+    display: block;
+}
+
+#go_green {
+    display: inline-block;
+}
+
+#go_green:hover {
+    background-color: lightgreen;
+}
+
+#go_dirty {
+    display: inline-block;
+    margin-left: 0.5rem;
+}
+
+#go_dirty:hover {
+    background-color: lightcoral;
+}
+
+button:hover, .button:hover {
+    background-color: #C0FBFF;
+}
+
+/*          STATS         */
+
+#player {
+    position: absolute;
+    background-color: rgba(24, 0, 0, 0.8);
+    top: 150px;
+    left: 80px;
+    transform: translate(-50%, -50%);
+    color: white;
+    z-index: 999;
+    padding: 0.3rem;
+    border-radius: 1rem;
+    min-width: 10vw;
+}
+#player p {
+    font-size: 0.8rem;
+    margin: 0.5rem;
+}
+
+/*    MAP    */
+
+.leaflet-touch .leaflet-control-zoom {
+    display: none;
+  }
+
+#map {
+    height: calc(100vh - 80px);
+    width: 100vw;
+    background-color: #180000;
+    box-sizing: border-box;
+}
+
+/*       HELP MENU        */
 
 .help_menu {
     border-radius: 2rem;
     max-width: 80%;
 }
 
-
-
-
-/*      dialog     */
+/*      EVENTS    */
 
 dialog[closed] {
     position: fixed;
@@ -235,6 +186,17 @@ dialog[closed] {
 
 dialog[open] {
     opacity: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 80vw;
+    text-align: center;
+}
+#youWin, #youLose {
+    max-width: 80vw;
+    padding: 1rem;
+    border-radius: 3rem;
 }
 
 dialog::backdrop {
@@ -250,30 +212,37 @@ dialog span {
     color: darkred;
 }
 
+dialog h3 {
+    text-align: center;
+
+}
 /* Media query */
 
-@media screen and (max-width: 45em) {
+@media screen and (min-width: 767px) {
+    #player-form {
+        top: auto;
+    }
+    #player {
+        top: 200px;
+        left: 150px;
+    }
+    #player p {
+        font-size: 1rem;
+        margin: 0.8rem;
+    }
+    .flex-wrap {
+        justify-content: space-between;
+    }
+    dialog[open] {
+        max-width: 40vw;
+    }
+    #youWin, #youLose {
+        max-width: 40vw;
+    }
+}
 
-    #game_menu {
-        width: 100%;
-    }
-
-    #map{
-        width: 100%;
-        height: 100vh;
-    }
-     #player {
-        position: absolute;
-        top: 15rem;
-        left: 10rem;
-    }
-    #youWin {
-        width: 100%;
-    }
-    #youLose {
-        width: 100%;
-    }
-    #lose button{
-        padding: 0.5rem;
+@media screen and (max-width: 330px) {
+    .right-buttons #story {
+        display: none;
     }
 }
