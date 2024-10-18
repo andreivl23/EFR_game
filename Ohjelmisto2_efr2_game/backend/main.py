@@ -79,7 +79,7 @@ class Game:
         event = {"name": name, "balance": balance, "text": text, "opened": opened}
         if opened == 0:
             sql = (
-                f"UPDATE efr_mini.events_location SET opened=1 "
+                f"UPDATE events_location SET opened=1 "
                 f"WHERE id={players_location} AND game={game_id} AND opened=0")
             cursor.execute(sql)
         return event
