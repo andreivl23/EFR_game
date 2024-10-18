@@ -26,7 +26,7 @@ map.setMaxZoom(maxZoom);
 
 // global variables
 
-const url= 'http://127.0.0.1:3000'; // BACKEND URL
+const url= 'http://efr.vlassenko.fi:3000'; // BACKEND URL
 
 let playerName;
 let difficulty;
