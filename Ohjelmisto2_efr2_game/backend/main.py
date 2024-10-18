@@ -144,8 +144,8 @@ class Game:
                 "Balance": balance}
             return response
 
-
+Game = Game()
 if __name__ == '__main__':
-    Game = Game()
+
     from waitress import serve
     serve(Game.app, host="0.0.0.0", port=3000)
