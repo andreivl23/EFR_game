@@ -19,7 +19,7 @@ map.setMaxBounds(bounds);
 
 // Set minimum and maximum zoom levels
 const minZoom = 3;
-const maxZoom = 5;
+const maxZoom = 8; // 5 def
 map.setMinZoom(minZoom);
 map.setMaxZoom(maxZoom);
 
@@ -27,6 +27,7 @@ map.setMaxZoom(maxZoom);
 // global variables
 
 const url= 'http://127.0.0.1:3000'; // BACKEND URL
+
 let playerName;
 let difficulty;
 let gameRound;
@@ -266,9 +267,20 @@ closeLeManuelle.addEventListener('click', () => {
     dialog[1].close();
 });
 
-/*++++++++             DEV TOOLS           +++++++++++++++*/
 
-/*    location by click
+
+
+/*++++++++             DEV TOOLS           +++++++++++++++*/
+/*    location by click WORKING
+
+map.on('click', function(e){
+  var coord = e.latlng;
+  var lat = coord.lat;
+  var lng = coord.lng;
+  console.log("You clicked the map at latitude: " + lat + " and longitude: " + lng);
+  });
+*/
+/*    location by click NOT WORKING
 
 const popup = L.popup();
 function onMapClick(e) {
@@ -276,5 +288,7 @@ function onMapClick(e) {
         .setLatLng(e.latlng)
         .setContent("You clicked the map at " + e.latlng.toString())
         .openOn(map);}
+
 */
+
 /*----------------- THE END   ----------------------*/
